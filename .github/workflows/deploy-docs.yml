@@ -1,51 +1,63 @@
-name: 部署文档 # 工作流名称
+name: 部署文档
 
 on:
   push:
     branches:
-      - main # 当推送到 main 分支时触发
+      - main
 
 permissions:
-  contents: write # 授予写入内容的权限，用于部署到 GitHub Pages
+  contents: write
 
 jobs:
-  deploy-gh-pages: # 作业名称
-    runs-on: ubuntu-latest # 使用最新的 Ubuntu 环境运行作业
+  deploy-gh-pages:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout # 步骤1：检出代码
-        uses: actions/checkout@v4 # 使用官方 checkout Action
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 获取完整的 Git 历史记录
-          # 如果你的文档需要 Git 子模块，取消注释下一行
+          fetch-depth: 0
+          # 如果你文档需要 Git 子模块，取消注释下一行
           # submodules: true
 
-      - name: 设置 pnpm # 步骤2：安装并设置 pnpm (修改点：指定了版本)
-        uses: pnpm/action-setup@v4 # 使用 pnpm 的 setup Action
+      - name: 设置 pnpm
+        uses: pnpm/action-setup@v4
         with:
-          version: 9 # 指定要安装的 pnpm 版本，解决 "No pnpm version is specified" 错误
+          version: 9
 
-      - name: 设置 Node.js # 步骤3：安装 Node.js
-        uses: actions/setup-node@v4 # 使用官方 setup-node Action
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22 # 指定 Node.js 版本
-          cache: pnpm # 启用 pnpm 缓存以加快依赖安装速度
+          node-version: 22
 
-      - name: 安装依赖 # 步骤4：安装项目依赖
+      # 添加显式的缓存步骤
+      - name: 获取 pnpm 缓存目录
+        id: pnpm-cache
         run: |
-          corepack enable # 启用 Corepack (用于管理包管理器)
-          pnpm install --frozen-lockfile # 使用 pnpm 安装依赖，并确保 lockfile 一致
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - name: 构建文档 # 步骤5：构建文档
-        env:
-          NODE_OPTIONS: --max_old_space_size=8192 # 设置 Node.js 环境变量，增加内存限制
-        run: |-
-          pnpm run docs:build # 执行构建命令
-          > src/.vuepress/dist/.nojekyll # 在输出目录创建 .nojekyll 文件，允许下划线开头的文件被 GitHub Pages 正确处理
-
-      - name: 部署文档 # 步骤6：部署构建结果到 GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4 # 使用部署 Action
+      - name: 设置 pnpm 缓存
+        uses: actions/cache@v4
         with:
-          # 部署到 gh-pages 分支
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: 安装依赖
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+
+      - name: 构建文档
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: |-
+          pnpm run docs:build
+          > src/.vuepress/dist/.nojekyll
+
+      - name: 部署文档
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          # 部署文档
           branch: gh-pages
-          # 要部署的文件夹路径
           folder: src/.vuepress/dist
