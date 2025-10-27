@@ -3,7 +3,7 @@ home: true
 layout: Blog
 icon: house
 title: cth个人博客
-heroImage: https://theme-hope-assets.vuejs.press/logo.svg
+heroImage: https://steingraeber-1259380157.cos.ap-guangzhou.myqcloud.com/public/images/cth/cth_logo.png
 heroText: cth个人博客
 heroFullScreen: true
 tagline: 今天不学习，明天变垃圾！
@@ -33,7 +33,7 @@ projects:
     desc: 伙伴详细介绍
     link: https://你的伙伴链接
 
-  - icon: https://theme-hope-assets.vuejs.press/logo.svg
+  - icon: https://steingraeber-1259380157.cos.ap-guangzhou.myqcloud.com/public/images/cth/cth_logo.png
     name: 自定义项目
     desc: 自定义详细介绍
     link: https://你的自定义链接

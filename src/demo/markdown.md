@@ -109,7 +109,7 @@ $$
 ```component VPCard
 title: Mr.Hope
 desc: Where there is light, there is hope
-logo: https://mister-hope.com/logo.svg
+logo: https://steingraeber-1259380157.cos.ap-guangzhou.myqcloud.com/public/images/cth/cth_logo.png
 link: https://mister-hope.com
 background: rgba(253, 230, 138, 0.15)
 ```
