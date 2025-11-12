@@ -16,7 +16,7 @@ export default hopeTheme({
   repo: "vuepress-theme-hope/vuepress-theme-hope",
 
   docsDir: "src",
-
+  fullscreen: true,
   // 导航栏
   navbar,
 
@@ -29,7 +29,7 @@ export default hopeTheme({
 
   // 博客相关
   blog: {
-    description: "一个前端开发者",
+    description: "今天不学习，明天变垃圾。",
     intro: "/intro.html",
     medias: {
       // Baidu: "https://example.com",
@@ -38,7 +38,7 @@ export default hopeTheme({
       // Dingding: "https://example.com",
       // Discord: "https://example.com",
       // Dribbble: "https://example.com",
-      // Email: "mailto:info@example.com",
+      Email: "mailto:sj13417017985@163.com",
       // Evernote: "https://example.com",
       // Facebook: "https://example.com",
       // Flipboard: "https://example.com",
@@ -73,8 +73,8 @@ export default hopeTheme({
   // 加密配置
   encrypt: {
     config: {
-      "/demo/encrypt.html": {
-        hint: "Password: 1234",
+      "/posts/tomato.html": {
+        hint: "请输入密码",
         password: "1234",
       },
     },
@@ -163,7 +163,10 @@ export default hopeTheme({
   // 在这里配置主题提供的插件
   plugins: {
     blog: true,
-
+  backToTop: {
+    threshold: 500,
+    progress: true,
+  },
     // 启用之前需安装 @waline/client
     // 警告: 这是一个仅供演示的测试服务，在生产环境中请自行部署并使用自己的服务！
     // comment: {

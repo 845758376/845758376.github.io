@@ -5,4 +5,6 @@ cover: /assets/images/cover3.jpg
 
 # 介绍页
 
-将你的个人介绍和档案放置在此处。
+一个前端开发者，喜欢用代码解决问题。
+学到很杂的前端，node，uni-app，小程序，vue，react，AI智能体都涉及过。
+学无止境！
